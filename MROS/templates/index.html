@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" href="/static/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css">
+    <script src="/static/jquery.js"></script>
+    <script src="/static/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <form action="" method="post">
+            <div class="col-md-11">
+                <h1>会议室预定</h1>
+                <div class="data pull-right">
+                    <input type="submit" class="btn btn-primary" id="save" value="提交">
+                </div>
+                <div class='col-sm-4 pull-right'>
+                    <div class="form-group">
+                        <div class='input-group date' id='datetimepicker2'>
+                            <input type="text" name="date" value="{{ date }}" class="form-control form_datetime" placeholder="请选择日期">
+                            <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <table class="table table-bordered">
+                        <thead>
+                        <th>会议室</th>
+                        {% for metting in metting_list %}
+                            <th>{{ metting.1 }}</th>
+                        {% endfor %}
+                        </thead>
+                        <tbody id="tBody">
+                        {% for room in room_list %}
+                            <tr>
+                                <td>{{ room.0 }}</td>
+                                {% for metting in metting_list %}
+                                    {% if metting.0 in user_list and dic[metting.0][room.0]%}
+                                        <td onclick="changetext(this,'{{ metting.0 }}:{{ room.1 }}')" id='{{ metting.0 }}:{{ room.0 }}'  class="temp">{{ session.user }}</td>
+                                    {% else %}
+                                        <td onclick="changetext(this,'{{ metting.0 }}:{{ room.1 }}')" id='{{ metting.0 }}:{{ room.0 }}'></td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    var user = '{{ session.user  }}';
+
+
+    function changetext(obj,id)
+    {
+    obj.style.backgroundColor = "gold";
+    obj.innerHTML = user;
+   $.ajax({
+    type: 'post',
+    url: '/post_list',
+    data: {
+        date : '{{ date }}',
+        id:id
+    },
+    success: function(data) {
+        if(data=='b'){
+        obj.style.backgroundColor = "white";
+        obj.innerHTML = '';}
+    },
+    error: function(data) {
+    }
+
+
+
+    })
+    }
+
+
+    //日期插件
+    $(".form_datetime").datetimepicker({
+        format: 'yyyy-mm-dd',//显示格式
+        todayHighlight: 1,//今天高亮
+        minView: "month",//设置只显示到月份
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1,
+        autoclose: 1//选择后自动关闭
+    })
+</script>
+</body>
+</html>

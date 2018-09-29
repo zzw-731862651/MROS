@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+</head>
+<body>
+<br>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-4">
+            <h4>欢迎您登陆会议室预约系统！</h4>
+            <form method="post">
+                <div class="control-group">
+                    <label class="control-label" for="input">用户名：</label>
+                    <div class="controls">
+                        <input id="input" name="username" type="text"/>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="inputPassword">密码：</label>
+                    <div class="controls">
+                        <input id="inputPassword" name="password" type="password"/>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <br>
+                        <button type="submit" class="btn btn-success">登陆</button>
+                    </div>
+                    {{ msg }}
+                </div>
+            </form>
+            <h5>备注：用户名和密码根据自己数据库中的userinfo表数据一致。<br>（我自己的数据库用户名：武松；密码123）</h5>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
